@@ -28,6 +28,10 @@ const TextRow = ({ text, amount }) => {
 
 const Statistics = ({ good, neutral, bad }) => {
   let total = good + neutral + bad;
+
+  if (total === 0) {
+    return <TextRow text={'No feedback given'} />;
+  }
   return (
     <div>
       <TextRow text={'good'} amount={good} />
