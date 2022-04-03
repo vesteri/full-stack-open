@@ -16,12 +16,26 @@ const Button = (props) => {
   return <button onClick={addClick}> {props.text} </button>;
 };
 
-const Statistics = ({ verdict, amount }) => {
+const TextRow = ({ text, amount }) => {
   return (
     <div>
       <p>
-        {verdict} {amount}
+        {text} {amount}
       </p>
+    </div>
+  );
+};
+
+const Statistics = ({ good, neutral, bad }) => {
+  let total = good + neutral + bad;
+  return (
+    <div>
+      <TextRow text={'good'} amount={good} />
+      <TextRow text={'neutral'} amount={neutral} />
+      <TextRow text={'bad'} amount={bad} />
+      <TextRow text={'all'} amount={total} />
+      <TextRow text={'average'} amount={(good - bad) / total} />
+      <TextRow text={'positive'} amount={(good / total) * 100 + ' %'} />
     </div>
   );
 };
@@ -31,7 +45,6 @@ const App = () => {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
-  let total = good + neutral + bad;
 
   return (
     <div>
@@ -40,12 +53,7 @@ const App = () => {
       <Button text={'neutral'} amount={neutral} set={setNeutral} />
       <Button text={'bad'} amount={bad} set={setBad} />
       <Header text={'statistics'} />
-      <Statistics verdict={'good'} amount={good} />
-      <Statistics verdict={'neutral'} amount={neutral} />
-      <Statistics verdict={'bad'} amount={bad} />
-      <Statistics verdict={'all'} amount={total} />
-      <Statistics verdict={'average'} amount={(good - bad) / total} />
-      <Statistics verdict={'positive'} amount={(good / total) * 100 + ' %'} />
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   );
 };
