@@ -16,30 +16,42 @@ const Button = (props) => {
   return <button onClick={addClick}> {props.text} </button>;
 };
 
-const TextRow = ({ text, amount }) => {
-  return (
-    <div>
-      <p>
-        {text} {amount}
-      </p>
-    </div>
-  );
-};
-
 const Statistics = ({ good, neutral, bad }) => {
   let total = good + neutral + bad;
 
   if (total === 0) {
-    return <TextRow text={'No feedback given'} />;
+    return <p>No feedback given </p>;
   }
   return (
     <div>
-      <TextRow text={'good'} amount={good} />
-      <TextRow text={'neutral'} amount={neutral} />
-      <TextRow text={'bad'} amount={bad} />
-      <TextRow text={'all'} amount={total} />
-      <TextRow text={'average'} amount={(good - bad) / total} />
-      <TextRow text={'positive'} amount={(good / total) * 100 + ' %'} />
+      <table>
+        <tbody>
+          <tr>
+            <td>good</td>
+            <td>{good}</td>
+          </tr>
+          <tr>
+            <td>neutral</td>
+            <td>{neutral}</td>
+          </tr>
+          <tr>
+            <td>bad</td>
+            <td>{bad}</td>
+          </tr>
+          <tr>
+            <td>all</td>
+            <td>{total}</td>
+          </tr>
+          <tr>
+            <td>average</td>
+            <td>{(good - bad) / total}</td>
+          </tr>
+          <tr>
+            <td>positive</td>
+            <td>{(good / total) * 100 + ' %'}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   );
 };
