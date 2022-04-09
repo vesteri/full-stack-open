@@ -19,11 +19,18 @@ const Header = (props) => {
 };
 
 const Content = ({ parts }) => {
+  const exercises = parts.map((part) => Number(part.exercises));
+  let sum = 0;
+  exercises.forEach((exercise) => {
+    sum += exercise;
+  });
+
   return (
     <div>
       {parts.map((part) => (
         <Part key={part.id} part={part.name} exercises={part.exercises} />
       ))}
+      <Part part={'Redux'} exercises={sum} />
     </div>
     // I tried to call the Part component inside a forEach loop,
     // but found out that it's impossible.
