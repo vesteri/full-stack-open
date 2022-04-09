@@ -13,7 +13,7 @@ const Part = (props) => {
 const Header = (props) => {
   return (
     <div>
-      <h1>{props.text}</h1>
+      <h2>{props.text}</h2>
     </div>
   );
 };
@@ -26,61 +26,69 @@ const Content = ({ parts }) => {
       {parts.map((part) => (
         <Part key={part.id} part={part.name} exercises={part.exercises} />
       ))}
-      <Part part={'Redux'} exercises={totalExercises} />
+      <p style={{ fontWeight: 'bold' }}>Total of {totalExercises} exercises.</p>
     </div>
-    // I tried to call the Part component inside a forEach loop,
-    // but found out that it's impossible.
   );
 };
 
 const Course = ({ course }) => (
   <div>
-    <Header text={'Half Stack application development'} />
+    <Header text={course.name} />
     <Content parts={course.parts} />
   </div>
 );
 
-/*
-const Total = (props) => {
-  let total = 0;
-  props.parts.forEach((object) => {
-    total += object.exercises;
-  });
-
-  return (
-    <div>
-      <p>Number of exercises {total}</p>
-    </div>
-  );
-};
-*/
-
 const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    id: 1,
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10,
-        id: 1,
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7,
-        id: 2,
-      },
-      {
-        name: 'State of a component',
-        exercises: 14,
-        id: 3,
-      },
-    ],
-  };
-
+  const courses = [
+    {
+      name: 'Half Stack application development',
+      id: 1,
+      parts: [
+        {
+          name: 'Fundamentals of React',
+          exercises: 10,
+          id: 1,
+        },
+        {
+          name: 'Using props to pass data',
+          exercises: 7,
+          id: 2,
+        },
+        {
+          name: 'State of a component',
+          exercises: 14,
+          id: 3,
+        },
+        {
+          name: 'Redux',
+          exercises: 11,
+          id: 4,
+        },
+      ],
+    },
+    {
+      name: 'Node.js',
+      id: 2,
+      parts: [
+        {
+          name: 'Routing',
+          exercises: 3,
+          id: 1,
+        },
+        {
+          name: 'Middlewares',
+          exercises: 7,
+          id: 2,
+        },
+      ],
+    },
+  ];
   return (
     <div>
-      <Course course={course} />
+      <h1>Web development curriculum</h1>
+      {courses.map((course) => (
+        <Course key={course.id} course={course} />
+      ))}
     </div>
   );
 };
