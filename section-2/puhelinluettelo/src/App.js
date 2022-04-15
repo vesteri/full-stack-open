@@ -1,5 +1,31 @@
 import { useState } from 'react';
 
+const Contacts = ({ persons, filter }) => {
+  const filteredPersons = persons.filter((person) =>
+    person.name.toUpperCase().includes(filter.toUpperCase())
+  );
+  return (
+    <>
+      <h2>Contacts</h2>
+      {filteredPersons.map((person) => (
+        <p key={person.name}>{`${person.name} ${person.number}`}</p>
+      ))}
+    </>
+  );
+};
+
+const Input = ({ header, inputString, set }) => {
+  return (
+    <div>
+      {header}
+      <input
+        value={inputString}
+        onChange={(event) => set(event.target.value)}
+      />
+    </div>
+  );
+};
+
 const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456' },
@@ -9,6 +35,7 @@ const App = () => {
   ]);
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
+  const [filter, setFilter] = useState('');
 
   const handleAdd = (event) => {
     event.preventDefault();
@@ -30,30 +57,21 @@ const App = () => {
 
   return (
     <div>
-      <h2>Phonebook</h2>
+      <h1>Phonebook</h1>
+      <Input
+        header={'Filter contacts: '}
+        inputString={filter}
+        set={setFilter}
+      />
+      <h2>Add a Contact</h2>
       <form onSubmit={handleAdd}>
-        <div>
-          name:
-          <input
-            value={newName}
-            onChange={(event) => setNewName(event.target.value)}
-          />
-        </div>
-        <div>
-          number:
-          <input
-            value={newNumber}
-            onChange={(event) => setNewNumber(event.target.value)}
-          />
-        </div>
+        <Input header={'Name: '} inputString={newName} set={setNewName} />
+        <Input header={'Number: '} inputString={newNumber} set={setNewNumber} />
         <div>
           <button type='submit'>add</button>
         </div>
       </form>
-      <h2>Numbers</h2>
-      {persons.map((person) => (
-        <p key={person.name}>{`${person.name} ${person.number}`}</p>
-      ))}
+      <Contacts persons={persons} filter={filter} />
     </div>
   );
 };
