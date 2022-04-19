@@ -1,6 +1,46 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
+const Weather = ({ country }) => {
+  const kelvin = 273.15;
+  const [weatherData, setWeatherData] = useState(null);
+
+  const apiKey = process.env.REACT_APP_API_KEY;
+  const lat = country.capitalInfo.latlng[0];
+  const lng = country.capitalInfo.latlng[1];
+  console.log(lat, lng);
+
+  useEffect(() => {
+    console.log('getting weather data');
+    axios
+      .get(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${apiKey}`
+      )
+      .then((response) => {
+        console.log('promise fulfilled');
+        setWeatherData(response.data);
+      });
+  }, [lat, lng, apiKey]);
+  console.log(weatherData);
+
+  if (!weatherData) {
+    return <></>;
+  }
+
+  return (
+    <div>
+      <h3>Weather in {country.capital}:</h3>
+      <p>Temperature: {(weatherData.main.temp - kelvin).toFixed(2)} °C</p>
+      <img
+        src={`http://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`}
+        alt={weatherData.weather.description}
+        width={70}
+      />
+      <p>Wind: {weatherData.wind.speed} m/s</p>
+    </div>
+  );
+};
+
 const CountryInfo = ({ country }) => {
   console.log('showing country info');
   const languagesArray = Object.values(country.languages);
@@ -8,11 +48,17 @@ const CountryInfo = ({ country }) => {
     <div>
       <h2>{country.name.common}</h2>
       <p>Capital: {country.capital}</p>
+      <p>Area: {country.area}</p>
       <p style={{ fontWeight: 'bold' }}>Languages:</p>
       {languagesArray.map((language) => (
         <p key={language}>{`- ${language}`}</p>
       ))}
-      <img src={country.flags.png} alt={`Flag of ${country.name.common}`} />
+      <img
+        src={country.flags.png}
+        alt={`Flag of ${country.name.common}`}
+        width={100}
+      />
+      <Weather country={country} />
     </div>
   );
 };
@@ -46,7 +92,7 @@ const App = () => {
   const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    console.log('effect');
+    console.log('getting country data');
     axios.get('https://restcountries.com/v3.1/all').then((response) => {
       console.log('promise fulfilled');
       setData(response.data);
