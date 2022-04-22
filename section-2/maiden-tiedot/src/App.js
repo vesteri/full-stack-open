@@ -75,6 +75,7 @@ const Countries = ({ filter, data, setFilter }) => {
   if (filteredCountries.length <= 10) {
     return (
       <div>
+        <p>{`${filteredCountries.length} matches:`}</p>
         {filteredCountries.map((country) => (
           <div key={country.name.common}>
             {country.name.common}
@@ -84,7 +85,7 @@ const Countries = ({ filter, data, setFilter }) => {
       </div>
     );
   }
-  return <p>Too many matches. Set a filter above.</p>;
+  return <p>{`${filteredCountries.length} matches. Set a filter above.`}</p>;
 };
 
 const App = () => {
