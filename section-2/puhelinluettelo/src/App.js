@@ -53,7 +53,11 @@ const App = () => {
         name: newName,
         number: newNumber,
       };
-      setPersons([...persons, personObject]);
+      axios
+        .post('http://localhost:3001/persons', personObject)
+        .then((response) => {
+          setPersons([...persons, response.data]);
+        });
     }
 
     setNewName('');
