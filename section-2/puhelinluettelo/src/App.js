@@ -1,7 +1,26 @@
 import { useEffect, useState } from 'react';
 import personService from './services/persons';
 
-const Contacts = ({ persons, filter }) => {
+const Contact = ({ person, setPersons }) => {
+  console.log(person);
+  const deletePerson = () => {
+    personService.del(person.id).then((response) => {
+      console.log(`${response.data} removed`);
+      setPersons((persons) =>
+        persons.filter((filterPerson) => filterPerson.id !== person.id)
+      );
+    });
+  };
+
+  return (
+    <p>
+      {`${person.name} ${person.number} `}
+      <button onClick={() => deletePerson()}>delete</button>
+    </p>
+  );
+};
+
+const Contacts = ({ persons, filter, setPersons }) => {
   const filteredPersons = persons.filter((person) =>
     person.name.toUpperCase().includes(filter.toUpperCase())
   );
@@ -9,7 +28,7 @@ const Contacts = ({ persons, filter }) => {
     <>
       <h2>Contacts</h2>
       {filteredPersons.map((person) => (
-        <p key={person.name}>{`${person.name} ${person.number}`}</p>
+        <Contact key={person.id} person={person} setPersons={setPersons} />
       ))}
     </>
   );
@@ -78,7 +97,7 @@ const App = () => {
           <button type='submit'>add</button>
         </div>
       </form>
-      <Contacts persons={persons} filter={filter} />
+      <Contacts persons={persons} filter={filter} setPersons={setPersons} />
     </div>
   );
 };
