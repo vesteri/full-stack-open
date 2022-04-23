@@ -1,5 +1,5 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
+import personService from './services/persons';
 
 const Contacts = ({ persons, filter }) => {
   const filteredPersons = persons.filter((person) =>
@@ -35,7 +35,7 @@ const App = () => {
 
   useEffect(() => {
     console.log('effect');
-    axios.get('http://localhost:3001/persons').then((response) => {
+    personService.getAll().then((response) => {
       console.log('promise fulfilled');
       setPersons(response.data);
     });
@@ -53,11 +53,9 @@ const App = () => {
         name: newName,
         number: newNumber,
       };
-      axios
-        .post('http://localhost:3001/persons', personObject)
-        .then((response) => {
-          setPersons([...persons, response.data]);
-        });
+      personService.add(personObject).then((response) => {
+        setPersons([...persons, response.data]);
+      });
     }
 
     setNewName('');
