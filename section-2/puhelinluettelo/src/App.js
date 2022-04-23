@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import personService from './services/persons';
 
 const Contact = ({ person, setPersons }) => {
-  console.log(person);
   const deletePerson = () => {
     if (window.confirm(`Deleting ${person.name} from contacts.`)) {
       personService.del(person.id).then((response) => {
@@ -61,14 +60,25 @@ const App = () => {
       setPersons(response.data);
     });
   }, []);
-  console.log('render', persons.length, 'notes');
 
   const handleAdd = (event) => {
     event.preventDefault();
     console.log('button clicked', event.target, newName);
     const names = persons.map((person) => person.name);
     if (names.includes(newName)) {
-      window.alert(`${newName} is already added to phonebook`);
+      if (
+        !window.confirm(
+          `${newName} is already in contacts. Replace their old number?`
+        )
+      ) {
+        return;
+      }
+      const personToOverwrite = persons.find(
+        (person) => person.name === newName
+      );
+      personService.overwriteNumber(personToOverwrite.id, newNumber);
+      personToOverwrite.number = newNumber;
+      setPersons(persons);
     } else {
       const personObject = {
         name: newName,

@@ -13,6 +13,10 @@ const del = (id) => {
   return axios.delete(`${baseUrl}/${id}`);
 };
 
-const exportedObject = { getAll, add, del };
+const overwriteNumber = (id, newNumber) => {
+  return axios.patch(`${baseUrl}/${id}`, { number: newNumber });
+};
+
+const exportedObject = { getAll, add, del, overwriteNumber };
 
 export default exportedObject;
