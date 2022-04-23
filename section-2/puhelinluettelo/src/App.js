@@ -4,12 +4,14 @@ import personService from './services/persons';
 const Contact = ({ person, setPersons }) => {
   console.log(person);
   const deletePerson = () => {
-    personService.del(person.id).then((response) => {
-      console.log(`${response.data} removed`);
-      setPersons((persons) =>
-        persons.filter((filterPerson) => filterPerson.id !== person.id)
-      );
-    });
+    if (window.confirm(`Deleting ${person.name} from contacts.`)) {
+      personService.del(person.id).then((response) => {
+        console.log(`${person.name} removed`);
+        setPersons((persons) =>
+          persons.filter((filterPerson) => filterPerson.id !== person.id)
+        );
+      });
+    }
   };
 
   return (
