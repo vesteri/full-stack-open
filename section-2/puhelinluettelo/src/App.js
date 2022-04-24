@@ -1,14 +1,24 @@
 import { useEffect, useState } from 'react';
 import personService from './services/persons';
 
-const Contact = ({ person, setPersons }) => {
+const Notification = ({ message }) => {
+  if (message === null) {
+    return null;
+  }
+
+  return <div className='notification'>{message}</div>;
+};
+
+const Contact = ({ person, setPersons, setNotification }) => {
   const deletePerson = () => {
     if (window.confirm(`Deleting ${person.name} from contacts.`)) {
-      personService.del(person.id).then((response) => {
+      personService.del(person.id).then(() => {
         console.log(`${person.name} removed`);
         setPersons((persons) =>
           persons.filter((filterPerson) => filterPerson.id !== person.id)
         );
+        setNotification(`${person.name} has been deleted from contacts.`);
+        setTimeout(() => setNotification(null), 3000);
       });
     }
   };
@@ -21,7 +31,7 @@ const Contact = ({ person, setPersons }) => {
   );
 };
 
-const Contacts = ({ persons, filter, setPersons }) => {
+const Contacts = ({ persons, filter, setPersons, setNotification }) => {
   const filteredPersons = persons.filter((person) =>
     person.name.toUpperCase().includes(filter.toUpperCase())
   );
@@ -29,7 +39,12 @@ const Contacts = ({ persons, filter, setPersons }) => {
     <>
       <h2>Contacts</h2>
       {filteredPersons.map((person) => (
-        <Contact key={person.id} person={person} setPersons={setPersons} />
+        <Contact
+          key={person.id}
+          person={person}
+          setPersons={setPersons}
+          setNotification={setNotification}
+        />
       ))}
     </>
   );
@@ -52,6 +67,7 @@ const App = () => {
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [filter, setFilter] = useState('');
+  const [notification, setNotification] = useState(null);
 
   useEffect(() => {
     console.log('effect');
@@ -79,6 +95,8 @@ const App = () => {
       personService.overwriteNumber(personToOverwrite.id, newNumber);
       personToOverwrite.number = newNumber;
       setPersons(persons);
+      setNotification(`Number of ${newName} has been updated.`);
+      setTimeout(() => setNotification(null), 3000);
     } else {
       const personObject = {
         name: newName,
@@ -87,6 +105,8 @@ const App = () => {
       personService.add(personObject).then((response) => {
         setPersons([...persons, response.data]);
       });
+      setNotification(`${newName} has been added to contacts.`);
+      setTimeout(() => setNotification(null), 3000);
     }
 
     setNewName('');
@@ -95,6 +115,7 @@ const App = () => {
 
   return (
     <div>
+      <Notification message={notification} />
       <h1>Phonebook</h1>
       <Input
         header={'Filter contacts: '}
@@ -109,7 +130,12 @@ const App = () => {
           <button type='submit'>add</button>
         </div>
       </form>
-      <Contacts persons={persons} filter={filter} setPersons={setPersons} />
+      <Contacts
+        persons={persons}
+        filter={filter}
+        setPersons={setPersons}
+        setNotification={setNotification}
+      />
     </div>
   );
 };
