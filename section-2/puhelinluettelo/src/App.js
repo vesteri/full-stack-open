@@ -1,12 +1,19 @@
 import { useEffect, useState } from 'react';
 import personService from './services/persons';
+let success = true;
 
-const Notification = ({ message }) => {
+const Notification = ({ message, success }) => {
   if (message === null) {
     return null;
   }
-
-  return <div className='notification'>{message}</div>;
+  if (success) {
+    return <div className='notification'>{message}</div>;
+  }
+  return (
+    <div className='notification' style={{ color: 'red' }}>
+      {message}
+    </div>
+  );
 };
 
 const Contact = ({ person, setPersons, setNotification }) => {
@@ -92,7 +99,15 @@ const App = () => {
       const personToOverwrite = persons.find(
         (person) => person.name === newName
       );
-      personService.overwriteNumber(personToOverwrite.id, newNumber);
+      personService
+        .overwriteNumber(personToOverwrite.id, newNumber)
+        .catch((error) => {
+          success = false;
+          setNotification(`${newName} has already been deleted from contacts.`);
+          setTimeout(() => setNotification(null), 3000);
+          setTimeout(() => (success = true), 3000);
+          setPersons(persons.filter((person) => person.name !== newName));
+        });
       personToOverwrite.number = newNumber;
       setPersons(persons);
       setNotification(`Number of ${newName} has been updated.`);
@@ -115,7 +130,7 @@ const App = () => {
 
   return (
     <div>
-      <Notification message={notification} />
+      <Notification message={notification} success={success} />
       <h1>Phonebook</h1>
       <Input
         header={'Filter contacts: '}
