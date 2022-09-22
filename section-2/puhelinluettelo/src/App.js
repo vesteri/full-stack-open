@@ -137,17 +137,31 @@ const App = () => {
         name: newName,
         number: newNumber,
       };
-      personService.add(personObject).then((response) => {
-        setPersons([...persons, response.data]);
-      });
-      setNotification({
-        ...notification,
-        message: `${newName} has been added to contacts.`,
-      });
-      setTimeout(
-        () => setNotification({ ...notification, message: null }),
-        3000
-      );
+      personService
+        .add(personObject)
+        .then((response) => {
+          setPersons([...persons, response.data]);
+          setNotification({
+            ...notification,
+            message: `${newName} has been added to contacts.`,
+          });
+          setTimeout(
+            () => setNotification({ ...notification, message: null }),
+            3000
+          );
+        })
+        .catch((error) => {
+          console.log(error.response.data);
+          setNotification({
+            ...notification,
+            message: error.response.data.error.message,
+            success: false,
+          });
+          setTimeout(
+            () => setNotification({ ...notification, message: null }),
+            3000
+          );
+        });
     }
 
     setNewName('');
