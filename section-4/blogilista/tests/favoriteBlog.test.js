@@ -1,4 +1,4 @@
-const listHelper = require("../utils/blog-helper");
+const blogHelper = require("../utils/blog-helper");
 
 describe("favorite blog", () => {
   const listWithOneBlog = [
@@ -37,17 +37,17 @@ describe("favorite blog", () => {
   ];
 
   test("when list has only one blog:", () => {
-    const result = listHelper.favoriteBlog(listWithOneBlog);
+    const result = blogHelper.favoriteBlog(listWithOneBlog);
     expect(result).toEqual(listWithOneBlog[0]);
   });
 
   test("when list has two blogs:", () => {
-    const result = listHelper.favoriteBlog(listWithTwoBlogs);
+    const result = blogHelper.favoriteBlog(listWithTwoBlogs);
     expect(result).toEqual(listWithTwoBlogs[1]);
   });
   test(`when list has three blogs,
     two of which have the same number of likes:`, () => {
-    const result = listHelper.favoriteBlog(listWithThreeBlogs);
+    const result = blogHelper.favoriteBlog(listWithThreeBlogs);
     expect(result).toEqual(listWithThreeBlogs[1]);
   });
 });

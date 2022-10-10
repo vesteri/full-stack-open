@@ -1,8 +1,8 @@
-const listHelper = require("../utils/blog-helper");
+const blogHelper = require("../utils/blog-helper");
 
 test("dummy returns one", () => {
   const blogs = [];
 
-  const result = listHelper.dummy(blogs);
+  const result = blogHelper.dummy(blogs);
   expect(result).toBe(1);
 });
