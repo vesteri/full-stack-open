@@ -26,11 +26,10 @@ test("there are two blogs", async () => {
   expect(response.body).toHaveLength(2);
 });
 
-/*test("identifier value is called 'id'", async () => {
+test("identifier value is called 'id'", async () => {
   const response = await api.get("/api/blogs");
-
-  expect(response.body[0]).toBeDefined("id");
-});*/
+  expect(response.body[0].id).toBeDefined();
+});
 
 /*test("new blogs can be added", async () => {
   const response = await api.get("/api/blogs");
