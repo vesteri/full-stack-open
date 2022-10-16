@@ -1,122 +1,91 @@
 [
   {
-    "_id": "6341945599e63851339d5265",
     "title": "MySQL basics",
     "author": "Kalle Röman",
     "url": "tuni.fi",
-    "likes": 69,
-    "__v": 0
+    "likes": 69
   },
   {
-    "_id": "634194a699e63851339d5268",
     "title": "Tyr Tyr Hopoti Hoi",
     "author": "Ryny Ryynänen",
     "url": "hevonen.net",
-    "likes": 82,
-    "__v": 0
+    "likes": 82
   },
   {
-    "_id": "6341951899e63851339d526b",
     "title": "Why TikTok is bad for you",
     "author": "Instagram, probably",
     "url": "youtubedocs.us",
-    "likes": 211,
-    "__v": 0
+    "likes": 211
   },
   {
-    "_id": "6341955f99e63851339d526d",
     "title": "Raamattu",
     "author": "Jeesus Kristus",
-    "url": "kirkko.fi",
-    "likes": 3,
-    "__v": 0
+    "url": "kirkko.fi"
   },
   {
-    "_id": "634195b299e63851339d526f",
     "title": "Maken Maailmanvalloitusretket, osa 3",
     "author": "Snaegis",
     "url": "fazer-esports.fi",
-    "likes": 62,
-    "__v": 0
+    "likes": 62
   },
   {
-    "_id": "6341960a99e63851339d5272",
     "title": "PC Masterrace",
     "author": "ES Jonne",
     "url": "gigantti.fi",
-    "likes": 33,
-    "__v": 0
+    "likes": 33
   },
   {
-    "_id": "6341964599e63851339d5275",
     "title": "The Art of Chess",
     "author": "Carlos Magnussen",
     "url": "chess-norway.net/store",
-    "likes": 55,
-    "__v": 0
+    "likes": 55
   },
   {
-    "_id": "6341969d99e63851339d5278",
     "title": "TrackMania",
     "author": "Ubisoft Nadeo",
     "url": "trackmania.com",
-    "likes": 176,
-    "__v": 0
+    "likes": 176
   },
   {
-    "_id": "634196d699e63851339d527b",
     "title": "Modern Warfare",
     "author": "Infinity Ward",
     "url": "agar.io",
-    "likes": 64,
-    "__v": 0
+    "likes": 64
   },
   {
-    "_id": "6341970399e63851339d527e",
     "title": "Dying Light",
     "author": "Techland",
     "url": "techland.com",
-    "likes": 66,
-    "__v": 0
+    "likes": 66
   },
   {
-    "_id": "6341979f99e63851339d5281",
     "title": "Lasimuki, Joka Kesti Kaiken",
     "author": "Marko Iittala",
     "url": "iittala.fi/store/i214jfie3#rt",
-    "likes": 22,
-    "__v": 0
+    "likes": 22
   },
   {
-    "_id": "6341980199e63851339d5284",
     "title": "PS5 Saatavuus 2022",
     "author": "Jorma Uotinen",
     "url": "techradar.fi/ps5-saatavuus",
-    "likes": 56,
-    "__v": 0
+    "likes": 56
   },
   {
-    "_id": "6341986f99e63851339d5287",
     "title": "The Most Popular Book of All Time",
     "author": "Harley Davidson",
     "url": "amazon.com/books/df32j4gfg3",
-    "likes": 299,
-    "__v": 0
+    "likes": 299
   },
   {
-    "_id": "634198f299e63851339d528a",
     "title": "Uusi Testamentti",
     "author": "Jeesus Kristus",
     "url": "kirkko.fi/ut",
-    "likes": 4,
-    "__v": 0
+    "likes": 4
   },
   {
-    "_id": "6341992d99e63851339d528c",
     "title": "Dead Island",
     "author": "Techland",
     "url": "techland.com/dead-island",
-    "likes": 24,
-    "__v": 0
+    "likes": 24
   }
 ]

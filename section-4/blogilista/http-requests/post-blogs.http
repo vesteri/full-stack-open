@@ -4,6 +4,5 @@ Content-Type: application/json
 {
   "title": "Dead Island",
   "author": "Techland",
-  "url": "techland.com/dead-island",
-  "likes": "24"
+  "url": "techland.com/dead-island"
 }
