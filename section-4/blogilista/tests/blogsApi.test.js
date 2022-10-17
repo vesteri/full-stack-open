@@ -3,14 +3,12 @@ const supertest = require("supertest");
 const app = require("../app");
 const api = supertest(app);
 const Blog = require("../models/blog");
-const initialBlogs = require("../test-blogs.json");
+const testBlogs = require("../test-blogs.json");
 
 beforeEach(async () => {
   await Blog.deleteMany({});
-  let blogObject = new Blog(initialBlogs[0]);
-  await blogObject.save();
-  blogObject = new Blog(initialBlogs[1]);
-  await blogObject.save();
+  await new Blog(testBlogs[0]).save();
+  await new Blog(testBlogs[1]).save();
 });
 
 test("blogs are returned as json", async () => {
@@ -21,32 +19,46 @@ test("blogs are returned as json", async () => {
 });
 
 test("there are two blogs", async () => {
-  const blogs = await Blog.find({});
-  expect(blogs).toHaveLength(2);
+  const response = await api.get("/api/blogs");
+  expect(200);
+  expect(response.body).toHaveLength(2);
 });
 
 test("identifier value is called 'id'", async () => {
-  const blogs = await Blog.find({});
-  expect(blogs[0].id).toBeDefined();
+  const response = await api.get("/api/blogs");
+  expect(response.body[0].id).toBeDefined();
 });
 
 test("new blogs can be added", async () => {
-  let blogs = await Blog.find({});
-  const length = blogs.length;
-  const blogObject = new Blog(initialBlogs[2]);
-  await blogObject.save();
-  blogs = await Blog.find({});
-  expect(blogs).toHaveLength(length + 1);
+  const initialResponse = await api.get("/api/blogs");
+  await api
+    .post("/api/blogs")
+    .send(testBlogs[2])
+    .expect(201)
+    .expect("Content-Type", /application\/json/);
+  const newResponse = await api.get("/api/blogs");
+  expect(newResponse.body).toHaveLength(initialResponse.body.length + 1);
+  expect(newResponse.body.map((b) => b.title)).toContain(testBlogs[2].title);
 });
 
-test("blogs have 0 likes by default", () => {
-  const blogWithoutLikes = new Blog(initialBlogs[3]);
-  expect(blogWithoutLikes.likes).toBe(0);
+test("undefined number of likes is defaulted to 0", async () => {
+  const blogWithoutLikes = testBlogs[3];
+  await api.post("/api/blogs").send(blogWithoutLikes).expect(201);
+  const blogsData = await api.get("/api/blogs");
+  expect(
+    blogsData.body.some(
+      (blog) => blog.title === blogWithoutLikes.title && blog.likes === 0
+    )
+  ).toBe(true);
 });
 
-/*test("invalid data will not be added", async () => {
-  ...
-})*/
+test("blogs with invalid data won't be added", async () => {
+  //eslint-disable-next-line
+  const { title, url, ...invalidBlog } = testBlogs[4];
+  await api.post("/api/blogs").send(invalidBlog).expect(400);
+  const blogsData = await api.get("/api/blogs");
+  expect(blogsData.body).toHaveLength(2);
+});
 
 afterAll(() => {
   mongoose.connection.close();
