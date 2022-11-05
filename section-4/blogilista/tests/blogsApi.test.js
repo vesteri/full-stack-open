@@ -60,6 +60,17 @@ test("blogs with invalid data won't be added", async () => {
   expect(blogsData.body).toHaveLength(2);
 });
 
+test("blogs can be deleted", async () => {
+  let response = await api.get("/api/blogs");
+  expect(response.body).toHaveLength(2);
+
+  const id = response.body[0].id;
+  await api.delete(`/api/blogs/${id}`).expect(204);
+
+  response = await api.get("/api/blogs");
+  expect(response.body).toHaveLength(1);
+});
+
 afterAll(() => {
   mongoose.connection.close();
 });
