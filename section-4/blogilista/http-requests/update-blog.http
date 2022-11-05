@@ -1,0 +1,9 @@
+PUT http://localhost:3003/api/blogs/6341960a99e63851339d5272 HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "PC Masterrace",
+    "author": "ES Jonne",
+    "url": "gigantti.fi",
+    "likes": 33
+}

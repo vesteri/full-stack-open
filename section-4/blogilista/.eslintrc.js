@@ -15,7 +15,7 @@ module.exports = {
     //indent: ["error", 2],
     "linebreak-style": ["error", "unix"],
     quotes: ["error", "double"],
-    semi: ["error", "always"],
+    semi: ["warn", "always"],
     "no-unused-vars": [
       "warn",
       { vars: "all", args: "after-used", ignoreRestSiblings: false },
