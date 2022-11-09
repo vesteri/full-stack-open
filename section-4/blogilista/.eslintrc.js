@@ -13,8 +13,8 @@ module.exports = {
   },
   rules: {
     //indent: ["error", 2],
-    "linebreak-style": ["error", "unix"],
-    quotes: ["error", "double"],
+    "linebreak-style": ["warn", "unix"],
+    quotes: ["warn", "double"],
     semi: ["warn", "always"],
     "no-unused-vars": [
       "warn",
