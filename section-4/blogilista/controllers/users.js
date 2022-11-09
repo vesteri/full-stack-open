@@ -19,4 +19,8 @@ usersRouter.post("/", async (request, response) => {
   response.status(201).json(savedUser);
 });
 
+usersRouter.get("/", async (_request, response) => {
+  response.json(await User.find({}));
+});
+
 module.exports = usersRouter;
